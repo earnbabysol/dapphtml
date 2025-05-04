@@ -1,3 +1,4 @@
+
 let provider, program, wallet;
 let referrer = null;
 
@@ -11,14 +12,18 @@ const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.co
 })();
 
 function updateInviteLink() {
-  if (wallet) {
+  if (wallet && wallet.toString) {
     const link = window.location.origin + "?ref=" + wallet.toString();
     document.getElementById("invite-link").innerText = link;
+    console.log("✅ Invite link updated:", link);
+  } else {
+    console.warn("⚠️ Wallet not ready for invite link.");
   }
 }
 
 function copyLink() {
   const text = document.getElementById("invite-link").innerText;
+  if (!text || text === "-") return alert("Invite link not ready.");
   navigator.clipboard.writeText(text).then(() => {
     alert("Link copied!");
   });
@@ -38,7 +43,7 @@ async function connectPhantom() {
     return;
   }
   await provider.connect();
-  afterConnect();
+  await afterConnect();
 }
 
 async function connectOKX() {
@@ -48,7 +53,7 @@ async function connectOKX() {
     return;
   }
   await provider.connect();
-  afterConnect();
+  await afterConnect();
 }
 
 function disconnectWallet() {
@@ -60,6 +65,10 @@ function disconnectWallet() {
 
 async function afterConnect() {
   wallet = provider.publicKey;
+  if (!wallet) {
+    console.error("❌ Wallet public key not available.");
+    return;
+  }
   document.getElementById("wallet-address").innerText = wallet.toString();
   program = await getProgram();
   updateInviteLink();
