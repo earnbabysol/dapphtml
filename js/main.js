@@ -12,12 +12,17 @@ const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.co
 })();
 
 function updateInviteLink() {
-  if (wallet && wallet.toString) {
-    const link = window.location.origin + "?ref=" + wallet.toString();
-    document.getElementById("invite-link").innerText = link;
-    console.log("✅ Invite link updated:", link);
-  } else {
-    console.warn("⚠️ Wallet not ready for invite link.");
+  try {
+    const pubkey = wallet?.toBase58?.() || wallet?.toString?.() || wallet;
+    if (pubkey) {
+      const link = window.location.origin + "?ref=" + pubkey;
+      document.getElementById("invite-link").innerText = link;
+      console.log("✅ Invite link updated:", link);
+    } else {
+      throw new Error("Wallet not ready");
+    }
+  } catch (e) {
+    console.warn("⚠️ Failed to update invite link:", e);
   }
 }
 
