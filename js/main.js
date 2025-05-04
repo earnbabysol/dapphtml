@@ -6,29 +6,63 @@ const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.co
 (async function detectRef() {
   const url = new URL(window.location.href);
   const ref = url.searchParams.get("ref");
-  if (ref) {
-    localStorage.setItem("ref", ref);
-  }
+  if (ref) localStorage.setItem("ref", ref);
   referrer = localStorage.getItem("ref");
 })();
+
+function updateInviteLink() {
+  if (wallet) {
+    const link = window.location.origin + "?ref=" + wallet.toString();
+    document.getElementById("invite-link").innerText = link;
+  }
+}
+
+function copyLink() {
+  const text = document.getElementById("invite-link").innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Link copied!");
+  });
+}
 
 async function getProgram() {
   const idl = await fetch("https://earndapp.netlify.app/idl.json").then(res => res.json());
   const programId = new solanaWeb3.PublicKey(idl.metadata.address);
-  const anchorProvider = new anchor.AnchorProvider(connection, window.solana, {});
+  const anchorProvider = new anchor.AnchorProvider(connection, provider, {});
   return new anchor.Program(idl, programId, anchorProvider);
 }
 
-async function connectWallet() {
+async function connectPhantom() {
   provider = window.solana;
   if (!provider || !provider.isPhantom) {
-    alert("Please install Phantom Wallet");
+    alert("Please install Phantom");
     return;
   }
   await provider.connect();
+  afterConnect();
+}
+
+async function connectOKX() {
+  provider = window.okxwallet?.solana;
+  if (!provider) {
+    alert("Please install OKX Wallet");
+    return;
+  }
+  await provider.connect();
+  afterConnect();
+}
+
+function disconnectWallet() {
+  if (provider && provider.disconnect) provider.disconnect();
+  wallet = null;
+  document.getElementById("wallet-address").innerText = "Not connected";
+  document.getElementById("invite-link").innerText = "-";
+}
+
+async function afterConnect() {
   wallet = provider.publicKey;
   document.getElementById("wallet-address").innerText = wallet.toString();
   program = await getProgram();
+  updateInviteLink();
   fetchBalance();
 }
 
