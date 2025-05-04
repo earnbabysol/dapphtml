@@ -1,0 +1,52 @@
+{
+  "version": "0.1.0",
+  "name": "earn_token",
+  "instructions": [
+    {
+      "name": "claimZero",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "mintWithReferral",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "ref",
+          "type": {
+            "option": "publicKey"
+          }
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "address": "So11111111111111111111111111111111111111112"
+  }
+}
