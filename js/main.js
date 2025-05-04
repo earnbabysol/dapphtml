@@ -12,9 +12,14 @@ const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.co
 })();
 
 function updateInviteLink() {
-  const fullText = document.getElementById("wallet-address").innerText;
-  const match = fullText.match(/Wallet: (\w{32,44})/);
-  const addr = match ? match[1] : null;
+  const text = document.getElementById("wallet-address").innerText;
+  let addr = null;
+  if (text.includes("Wallet:")) {
+    const parts = text.split("Wallet: ");
+    if (parts.length === 2) {
+      addr = parts[1].trim();
+    }
+  }
 
   if (addr) {
     const link = window.location.origin + "?ref=" + addr;
@@ -23,6 +28,7 @@ function updateInviteLink() {
   } else {
     document.getElementById("invite-link").innerText = "Invite link not ready.";
   }
+}
 } else {
     document.getElementById("invite-link").innerText = "Invite link not ready.";
   }
