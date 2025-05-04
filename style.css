@@ -1,26 +1,40 @@
 
 body {
+  background-color: #0d0d0d;
+  color: white;
   font-family: Arial, sans-serif;
-  background-color: #000;
-  color: #0f0;
   text-align: center;
-  padding: 20px;
+  padding: 30px;
 }
+
 button {
-  margin: 0.3rem;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
+  background-color: #00c9a7;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  color: white;
+  font-size: 16px;
+  margin: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+button:hover {
+  background-color: #00b199;
+}
+
 input {
-  padding: 0.3rem;
-  margin: 0.5rem;
-  font-size: 1rem;
-}
-.container {
-  max-width: 600px;
-  margin: auto;
-  border: 1px solid #0f0;
+  padding: 10px;
+  font-size: 16px;
+  width: 200px;
   border-radius: 8px;
-  padding: 1rem;
+  border: none;
+  margin-top: 10px;
+}
+
+#invite-link {
+  margin-top: 10px;
+  color: #00e1c0;
+  font-weight: bold;
+  font-size: 14px;
 }
