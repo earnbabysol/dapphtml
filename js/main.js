@@ -12,23 +12,19 @@ const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.co
 })();
 
 function updateInviteLink() {
-  try {
-    const pubkey = wallet?.toBase58?.() || wallet?.toString?.() || wallet;
-    if (pubkey) {
-      const link = window.location.origin + "?ref=" + pubkey;
-      document.getElementById("invite-link").innerText = link;
-      console.log("✅ Invite link updated:", link);
-    } else {
-      throw new Error("Wallet not ready");
-    }
-  } catch (e) {
-    console.warn("⚠️ Failed to update invite link:", e);
+  const addr = document.getElementById("wallet-address").innerText;
+  if (addr && addr.length > 30) {
+    const link = window.location.origin + "?ref=" + addr;
+    document.getElementById("invite-link").innerText = link;
+    console.log("✅ Invite link updated:", link);
+  } else {
+    document.getElementById("invite-link").innerText = "Invite link not ready.";
   }
 }
 
 function copyLink() {
   const text = document.getElementById("invite-link").innerText;
-  if (!text || text === "-") return alert("Invite link not ready.");
+  if (!text || text === "-" || text.includes("not ready")) return alert("Invite link not ready.");
   navigator.clipboard.writeText(text).then(() => {
     alert("Link copied!");
   });
@@ -71,15 +67,11 @@ function disconnectWallet() {
 }
 
 async function afterConnect() {
-  if (!wallet) {
-    console.error("❌ Wallet public key missing.");
-    return alert("Wallet connection failed.");
-  }
-
+  if (!wallet) return alert("Wallet connection failed.");
   document.getElementById("wallet-address").innerText = wallet.toString();
   program = await getProgram();
-  updateInviteLink();
   fetchBalance();
+  updateInviteLink();
 }
 
 async function claimZero() {
