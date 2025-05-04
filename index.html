@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EARN DApp</title>
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+  <script src="https://unpkg.com/@coral-xyz/anchor@latest/dist/umd/index.js"></script>
+  <script src="js/main.js" defer></script>
+  <style>
+    body { font-family: sans-serif; background: #111; color: #fff; text-align: center; padding: 2rem; }
+    button {
+      padding: 10px 24px;
+      margin: 8px;
+      font-size: 16px;
+      border: none;
+      background-color: #00b894;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    input {
+      padding: 8px;
+      font-size: 16px;
+      width: 200px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to $EARN</h1>
+  <p>Wallet: <span id="wallet-address">Not connected</span></p>
+  <p>Balance: <span id="token-balance">-</span> $EARN</p>
+
+  <button onclick="connectWallet()">Connect Wallet</button>
+  <button onclick="claimZero()">Claim Free 10,000 $EARN</button>
+
+  <h2>Mint $EARN</h2>
+  <input type="number" id="mint-amount" placeholder="Enter SOL amount (min 0.1)" />
+  <br/>
+  <button onclick="mintEarn()">Mint</button>
+</body>
+</html>
