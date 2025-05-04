@@ -64,12 +64,16 @@ function disconnectWallet() {
 }
 
 async function afterConnect() {
-  wallet = provider.publicKey;
-  if (!wallet) {
-    console.error("❌ Wallet public key not available.");
-    return;
+  await new Promise(resolve => setTimeout(resolve, 100));
+
+  if (!provider.publicKey) {
+    console.error("❌ provider.publicKey missing");
+    return alert("Wallet connection failed.");
   }
+
+  wallet = new solanaWeb3.PublicKey(provider.publicKey.toString());
   document.getElementById("wallet-address").innerText = wallet.toString();
+
   program = await getProgram();
   updateInviteLink();
   fetchBalance();
