@@ -42,7 +42,8 @@ async function connectPhantom() {
     alert("Please install Phantom");
     return;
   }
-  await provider.connect();
+  const resp = await provider.connect();
+  wallet = new solanaWeb3.PublicKey(resp.publicKey.toString());
   await afterConnect();
 }
 
@@ -52,7 +53,8 @@ async function connectOKX() {
     alert("Please install OKX Wallet");
     return;
   }
-  await provider.connect();
+  const resp = await provider.connect();
+  wallet = new solanaWeb3.PublicKey(resp.publicKey.toString());
   await afterConnect();
 }
 
@@ -64,16 +66,12 @@ function disconnectWallet() {
 }
 
 async function afterConnect() {
-  await new Promise(resolve => setTimeout(resolve, 100));
-
-  if (!provider.publicKey) {
-    console.error("❌ provider.publicKey missing");
+  if (!wallet) {
+    console.error("❌ Wallet public key missing.");
     return alert("Wallet connection failed.");
   }
 
-  wallet = new solanaWeb3.PublicKey(provider.publicKey.toString());
   document.getElementById("wallet-address").innerText = wallet.toString();
-
   program = await getProgram();
   updateInviteLink();
   fetchBalance();
