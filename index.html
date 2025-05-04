@@ -5,47 +5,41 @@
   <meta charset="UTF-8" />
   <title>Earn Token</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      background: #000;
-      color: #0f0;
-      font-family: monospace;
-      text-align: center;
-      padding: 2rem;
-    }
-    button {
-      margin: 0.5rem;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-    }
-    input {
-      padding: 0.3rem;
-      margin: 0.5rem;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Earn Token DApp</h1>
-  <p id="wallet-address">Wallet: -</p>
-  <button onclick="connectPhantom()">Connect Phantom</button>
-  <button onclick="connectOKX()">Connect OKX</button>
-  <button onclick="disconnectWallet()">Disconnect</button>
+  <div class="container">
+    <h1>Earn Token</h1>
+    <div id="wallet-info">
+      <p id="wallet-address">Wallet: -</p>
+      <button onclick="connectPhantom()">Connect Phantom</button>
+      <button onclick="connectOKX()">Connect OKX</button>
+      <button onclick="disconnectWallet()">Disconnect</button>
+    </div>
 
-  <h2>Your Invite Link</h2>
-  <p id="invite-link">Invite link not ready.</p>
-  <button onclick="copyLink()">Copy Invite Link</button>
+    <div id="invite-section">
+      <h2>Your Invite Link</h2>
+      <p id="invite-link">-</p>
+      <button onclick="copyLink()">Copy Invite Link</button>
+    </div>
 
-  <h2>Mint Tokens</h2>
-  <p>1 SOL = 1,000,000 Tokens | Min: 0.1 SOL</p>
-  <input id="mint-amount" placeholder="Amount in SOL" />
-  <button onclick="mintEarn()">Mint</button>
+    <div id="mint-section">
+      <h2>Mint</h2>
+      <p>1 SOL = 1,000,000 Tokens | Min: 0.1 SOL</p>
+      <input id="mint-amount" placeholder="Amount in SOL" />
+      <button onclick="mintEarn()">Mint</button>
+    </div>
 
-  <h2>Claim Free Tokens</h2>
-  <button onclick="claimZero()">Claim 10,000 Free Tokens</button>
+    <div id="claim-section">
+      <h2>Claim Free</h2>
+      <button onclick="claimZero()">Claim 10,000 Tokens</button>
+    </div>
 
-  <h2>Your Token Balance</h2>
-  <p id="token-balance">-</p>
-
+    <div id="balance-section">
+      <h2>Your Token Balance</h2>
+      <p id="token-balance">-</p>
+    </div>
+  </div>
   <script src="main.js"></script>
 </body>
 </html>
